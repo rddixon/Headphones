@@ -1,0 +1,32 @@
+#include <uspeech.h>
+signal voice(A0);
+
+int rotPin = 2;
+char c = 'a';
+char old_c = 'a';
+
+void setup() {
+  voice.calibrate();
+  voice.f_enabled = true;
+  Serial.begin(9600); 
+  voice.minVolume = 3500;
+  voice.econstant = 2;
+  voice.aconstant = 3;
+  voice.vconstant = 1;
+  voice.shconstant = 7;
+  voice.fconstant = 400;
+}
+
+void loop() {
+ c = voice.getPhoneme();
+ //Serial.println(c);  
+  
+  if (c == 'h' && old_c != 'h') {
+     Serial.println("yay!");
+     digitalWrite(rotPin, HIGH);
+     delay(1000);
+     digitalWrite(rotPin, LOW);
+  }
+  
+  old_c = c;
+}
